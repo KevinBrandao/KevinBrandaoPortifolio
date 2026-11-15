@@ -26,7 +26,7 @@ export default function ProjetosPage() {
       pageTitle
       title={
         <>
-          Projetos que mostram <Serif>como eu penso.</Serif>
+         + 119 Projetos que mostram <Serif>como eu penso.</Serif>
         </>
       }
       lead="Uma seleção dos meus repositórios. Filtre por área ou abra um projeto para ver o problema, a arquitetura e as tecnologias."
