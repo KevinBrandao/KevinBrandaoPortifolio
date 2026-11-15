@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 import { Menu, Moon, Sun, X } from "lucide-react";
 import { Monogram } from "./icons";
 
@@ -42,6 +43,31 @@ function ThemeToggle() {
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
+  const pathname = usePathname();
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
+
+  // Destaca no menu a seção que está na tela (somente na página inicial).
+  useEffect(() => {
+    if (pathname !== "/") {
+      setActive(null);
+      return;
+    }
+    const sections = nav
+      .map((item) => document.getElementById(item.href.slice(2)))
+      .filter((el): el is HTMLElement => el !== null);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    sections.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -74,17 +100,31 @@ export function Header() {
         </Link>
 
         <nav aria-label="Navegação principal" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
-            {nav.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="rounded-md px-3 py-2 text-sm text-muted transition-colors hover:text-fg"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+          <ul className="flex items-center gap-0.5 rounded-full border border-line bg-surface/50 p-1 backdrop-blur-md">
+            {nav.map((item) => {
+              const isActive = active === item.href.slice(2);
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={isActive ? "location" : undefined}
+                    className={`relative block rounded-full px-3.5 py-1.5 text-sm transition-colors hover:text-fg ${
+                      isActive ? "text-fg" : "text-muted"
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active"
+                        className="absolute inset-0 rounded-full border border-line-strong bg-fg/[0.07]"
+                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span className="relative">{item.label}</span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
@@ -102,6 +142,12 @@ export function Header() {
           </button>
         </div>
       </div>
+
+      <motion.div
+        style={{ scaleX: progress }}
+        className="absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-accent to-accent-2"
+        aria-hidden="true"
+      />
 
       <AnimatePresence>
         {open && (

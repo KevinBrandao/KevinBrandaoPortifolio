@@ -1,6 +1,6 @@
 # Portfólio — Kevin Brandão
 
-Portfólio profissional de Kevin Brandão (Quality Assurance · Software Engineering · Innovation).
+Portfólio profissional de Kevin Brandão (Quality Assurance · Web Development · Software Engineering · Innovation).
 
 ## Stack
 

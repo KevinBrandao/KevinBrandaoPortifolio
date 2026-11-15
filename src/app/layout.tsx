@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Spotlight } from "@/components/Spotlight";
 import { profile, siteUrl } from "@/data/profile";
 import "./globals.css";
 
@@ -16,7 +17,7 @@ const instrument = Instrument_Serif({
   display: "swap",
 });
 
-const title = "Kevin Brandão — Quality Assurance & Software Engineering";
+const title = "Kevin Brandão — Quality Assurance, Web Development & Software Engineering";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
     "Cypress",
     "Playwright",
     "Selenium",
+    "Desenvolvedor Web",
     "Engenharia de Software",
     "Franca SP",
   ],
@@ -92,6 +94,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Pular para o conteúdo
         </a>
         <div className="backdrop" aria-hidden="true" />
+        <div className="grain" aria-hidden="true" />
+        <Spotlight />
         <Header />
         <main id="conteudo">{children}</main>
         <Footer />

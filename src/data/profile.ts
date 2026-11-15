@@ -9,7 +9,7 @@ export const siteUrl =
 export const profile = {
   name: "Kevin Brandão",
   fullName: "Kevin de Almeida Brandão",
-  roles: ["Quality Assurance", "Software Engineering", "Innovation"],
+  roles: ["Quality Assurance", "Web Development", "Software Engineering", "Innovation"],
   headline: "Profissional de Tecnologia",
   currentRole: "Analista de Qualidade Pleno na TOTVS",
   location: "Franca, SP · Brasil",
@@ -22,7 +22,7 @@ export const profile = {
   resumePdf: "/kevin-brandao-curriculo.pdf",
   photo: "/kevin-brandao.jpg",
   description:
-    "Portfólio de Kevin Brandão, Analista de Qualidade de Software na TOTVS. Experiência em automação de testes, desenvolvimento web e projetos com Inteligência Artificial.",
+    "Portfólio de Kevin Brandão, Analista de Qualidade de Software na TOTVS e desenvolvedor web. Experiência em automação de testes, desenvolvimento web com PHP, JavaScript e React e projetos com Inteligência Artificial.",
   intro:
     "Sou Analista de Qualidade Pleno na TOTVS. Comecei no suporte técnico, passei pelo desenvolvimento web e encontrei na qualidade de software o ponto em que código, regra de negócio e experiência de quem usa se encontram. Hoje investigo como a Inteligência Artificial pode ampliar esse trabalho.",
 } as const;

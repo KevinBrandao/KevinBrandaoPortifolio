@@ -1,5 +1,6 @@
 import { experiences } from "@/data/career";
 import { Reveal } from "./Reveal";
+import { Timeline } from "./Timeline";
 import { Section, Serif } from "./Section";
 
 export function Experience() {
@@ -15,13 +16,12 @@ export function Experience() {
       }
       lead="Seis anos em times de software, alternando entre qualidade, liderança e desenvolvimento."
     >
-      <ol className="relative">
-        <span className="absolute bottom-2 left-[5px] top-2 w-px bg-line sm:left-[calc(11rem+5px)]" aria-hidden="true" />
+      <Timeline>
         {experiences.map((exp, i) => (
           <li key={`${exp.company}-${exp.period}`} className="relative pb-10 pl-8 last:pb-0 sm:grid sm:grid-cols-[11rem_1fr] sm:gap-0 sm:pl-0">
             <span
-              className={`absolute left-0 top-1.5 size-[11px] rounded-full border-2 sm:left-[11rem] ${
-                exp.current ? "border-ok bg-ok" : "border-line-strong bg-bg"
+              className={`absolute left-0 top-1.5 z-10 size-[11px] rounded-full border-2 sm:left-[11rem] ${
+                exp.current ? "border-ok bg-ok shadow-[0_0_0_4px_color-mix(in_srgb,var(--ok)_22%,transparent)]" : "border-line-strong bg-bg"
               }`}
               aria-hidden="true"
             />
@@ -66,7 +66,7 @@ export function Experience() {
             </Reveal>
           </li>
         ))}
-      </ol>
+      </Timeline>
     </Section>
   );
 }

@@ -27,7 +27,7 @@ export default function OpenGraphImage() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 112, fontWeight: 700, letterSpacing: -4, lineHeight: 1 }}>Kevin Brandão</div>
           <div style={{ marginTop: 24, fontSize: 40, color: "#b08cff" }}>
-            Quality Assurance · Software Engineering · Innovation
+            Quality Assurance · Web Development · Software Engineering · Innovation
           </div>
         </div>
         <div style={{ display: "flex", fontSize: 26, color: "#9ba2b4" }}>

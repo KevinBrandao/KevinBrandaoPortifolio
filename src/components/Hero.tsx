@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, Check, Download, MapPin } from "lucide-react";
 import { indicators, profile } from "@/data/profile";
+import { CountUp } from "./CountUp";
+import { Marquee } from "./Marquee";
 import { GithubIcon, LinkedinIcon } from "./icons";
 import { Reveal } from "./Reveal";
 
@@ -110,12 +112,16 @@ export function Hero() {
           {indicators.map((item) => (
             <div key={item.label} className="bg-surface p-5 sm:p-6">
               <dt className="text-sm text-muted">{item.label}</dt>
-              <dd className="mt-1 text-4xl font-semibold tracking-tight sm:text-5xl">{item.value}</dd>
+              <dd className="text-hero mt-1 text-4xl font-semibold tracking-tight sm:text-5xl">
+                <CountUp value={item.value} />
+              </dd>
               <dd className="mt-2 font-mono text-[0.7rem] leading-snug text-muted">{item.detail}</dd>
             </div>
           ))}
         </dl>
       </Reveal>
+
+      <Marquee />
     </section>
   );
 }
