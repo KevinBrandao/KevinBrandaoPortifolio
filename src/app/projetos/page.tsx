@@ -35,7 +35,7 @@ export default function ProjetosPage() {
 
       <Reveal className="mt-16">
         <h2 className="font-mono text-xs tracking-wider text-muted">
-          <span className="text-accent">+</span> outros repositórios
+          <span className="text-accent">+ 119</span> outros repositórios
         </h2>
         <ul className="mt-5 divide-y divide-line border-y border-line">
           {moreRepos.map((repo) => (

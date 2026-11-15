@@ -22,7 +22,7 @@ export function ProjectGrid({ projects }: { projects: Project[] }) {
   const visible = filter ? projects.filter((p) => p.focus.includes(filter)) : projects;
 
   const options: { value: Focus | null; label: string; count: number }[] = [
-    { value: null, label: "Todos 119", count: projects.length },
+    { value: null, label: "Todos", count: projects.length },
     ...available.map((f) => ({ value: f, label: labels[f], count: projects.filter((p) => p.focus.includes(f)).length })),
   ];
 
