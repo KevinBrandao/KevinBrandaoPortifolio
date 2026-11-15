@@ -1,23 +1,13 @@
-import { About } from "@/components/About";
 import { Contact } from "@/components/Contact";
-import { Education } from "@/components/Education";
-import { Experience } from "@/components/Experience";
+import { FeaturedProjects } from "@/components/FeaturedProjects";
 import { Hero } from "@/components/Hero";
-import { Projects } from "@/components/Projects";
-import { Resume } from "@/components/Resume";
-import { Stack } from "@/components/Stack";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <About />
-      <Experience />
-      <Education />
-      <Stack />
-      <Projects />
-      <Resume />
-      <Contact />
+      <FeaturedProjects />
+      <Contact compact />
     </>
   );
 }

@@ -7,13 +7,20 @@ type Props = {
   label: string;
   title: ReactNode;
   lead?: string;
+  /** Primeira seção de uma página: o título vira h1 e ganha espaço para o cabeçalho fixo. */
+  pageTitle?: boolean;
   children: ReactNode;
 };
 
 /** Cabeçalho padrão das seções: índice em mono (herança do "./projetos" do site antigo) + título editorial. */
-export function Section({ id, index, label, title, lead, children }: Props) {
+export function Section({ id, index, label, title, lead, pageTitle = false, children }: Props) {
+  const Heading = pageTitle ? "h1" : "h2";
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className={`mx-auto w-full max-w-6xl px-5 sm:px-8 ${pageTitle ? "pb-20 pt-28 sm:pb-28 sm:pt-40" : "py-20 sm:py-28"}`}
+    >
       <Reveal>
         <p className="flex items-center gap-3 font-mono text-xs tracking-wider text-muted">
           <span>
@@ -22,9 +29,14 @@ export function Section({ id, index, label, title, lead, children }: Props) {
           </span>
           <span className="h-px w-16 bg-gradient-to-r from-accent/60 to-transparent" aria-hidden="true" />
         </p>
-        <h2 id={`${id}-title`} className="mt-4 max-w-3xl text-3xl font-semibold tracking-tight text-balance sm:text-5xl sm:leading-[1.08]">
+        <Heading
+          id={`${id}-title`}
+          className={`mt-4 max-w-3xl font-semibold tracking-tight text-balance ${
+            pageTitle ? "text-4xl sm:text-6xl sm:leading-[1.05]" : "text-3xl sm:text-5xl sm:leading-[1.08]"
+          }`}
+        >
           {title}
-        </h2>
+        </Heading>
         {lead && <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">{lead}</p>}
       </Reveal>
       <div className="mt-10 sm:mt-14">{children}</div>

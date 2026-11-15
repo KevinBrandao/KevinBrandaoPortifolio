@@ -4,18 +4,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
-import { Menu, Moon, Sun, X } from "lucide-react";
+import { FileText, Menu, Moon, Sun, X } from "lucide-react";
 import { Monogram } from "./icons";
 
 const nav = [
-  { href: "/#sobre", label: "Sobre" },
-  { href: "/#experiencia", label: "Experiência" },
-  { href: "/#formacao", label: "Formação" },
-  { href: "/#stack", label: "Stack" },
-  { href: "/#projetos", label: "Projetos" },
-  { href: "/#curriculo", label: "Currículo" },
-  { href: "/#contato", label: "Contato" },
+  { href: "/", label: "Início" },
+  { href: "/sobre", label: "Sobre" },
+  { href: "/projetos", label: "Projetos" },
+  { href: "/contato", label: "Contato" },
 ];
+
+const isCurrent = (pathname: string, href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
 function ThemeToggle() {
   const toggle = () => {
@@ -43,31 +42,9 @@ function ThemeToggle() {
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
   const pathname = usePathname();
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
-
-  // Destaca no menu a seção que está na tela (somente na página inicial).
-  useEffect(() => {
-    if (pathname !== "/") {
-      setActive(null);
-      return;
-    }
-    const sections = nav
-      .map((item) => document.getElementById(item.href.slice(2)))
-      .filter((el): el is HTMLElement => el !== null);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        }
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    sections.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [pathname]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -99,20 +76,20 @@ export function Header() {
           <span>Kevin Brandão</span>
         </Link>
 
-        <nav aria-label="Navegação principal" className="hidden lg:block">
+        <nav aria-label="Navegação principal" className="hidden md:block">
           <ul className="flex items-center gap-0.5 rounded-full border border-line bg-surface/50 p-1 backdrop-blur-md">
             {nav.map((item) => {
-              const isActive = active === item.href.slice(2);
+              const active = isCurrent(pathname, item.href);
               return (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    aria-current={isActive ? "location" : undefined}
-                    className={`relative block rounded-full px-3.5 py-1.5 text-sm transition-colors hover:text-fg ${
-                      isActive ? "text-fg" : "text-muted"
+                    aria-current={active ? "page" : undefined}
+                    className={`relative block rounded-full px-4 py-1.5 text-sm transition-colors hover:text-fg ${
+                      active ? "text-fg" : "text-muted"
                     }`}
                   >
-                    {isActive && (
+                    {active && (
                       <motion.span
                         layoutId="nav-active"
                         className="absolute inset-0 rounded-full border border-line-strong bg-fg/[0.07]"
@@ -129,6 +106,12 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <Link
+            href="/curriculo"
+            className="hidden h-10 items-center gap-2 rounded-lg border border-line px-3.5 text-sm text-muted transition-colors hover:border-accent hover:text-fg md:inline-flex"
+          >
+            <FileText className="size-4" aria-hidden="true" /> Currículo
+          </Link>
           <ThemeToggle />
           <button
             type="button"
@@ -136,7 +119,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls="menu-mobile"
             aria-label={open ? "Fechar menu" : "Abrir menu"}
-            className="grid size-10 place-items-center rounded-lg border border-line text-fg lg:hidden"
+            className="grid size-10 place-items-center rounded-lg border border-line text-fg md:hidden"
           >
             {open ? <X className="size-4" aria-hidden="true" /> : <Menu className="size-4" aria-hidden="true" />}
           </button>
@@ -158,21 +141,25 @@ export function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.22 }}
-            className="overflow-hidden lg:hidden"
+            className="overflow-hidden md:hidden"
           >
             <ul className="mx-auto max-w-6xl px-5 pb-6 pt-2 sm:px-8">
-              {nav.map((item, i) => (
-                <li key={item.href} className="border-b border-line last:border-0">
-                  <Link
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center justify-between py-3.5 text-lg"
-                  >
-                    {item.label}
-                    <span className="font-mono text-xs text-muted">0{i + 1}</span>
-                  </Link>
-                </li>
-              ))}
+              {[...nav, { href: "/curriculo", label: "Currículo" }].map((item, i) => {
+                const active = isCurrent(pathname, item.href);
+                return (
+                  <li key={item.href} className="border-b border-line last:border-0">
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpen(false)}
+                      aria-current={active ? "page" : undefined}
+                      className={`flex items-center justify-between py-3.5 text-lg ${active ? "text-accent" : ""}`}
+                    >
+                      {item.label}
+                      <span className="font-mono text-xs text-muted">0{i + 1}</span>
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </motion.nav>
         )}

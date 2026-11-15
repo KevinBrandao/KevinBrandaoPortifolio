@@ -17,7 +17,10 @@ Todas as páginas são geradas estaticamente. Não há backend nem banco de dado
 ```
 src/
   app/
-    page.tsx                 página inicial (todas as seções)
+    page.tsx                 início (apresentação e projetos em destaque)
+    sobre/                   trajetória, experiência, formação e stack
+    projetos/                grade de projetos com filtro por área
+    contato/                 canais de contato
     projetos/[slug]/         página de detalhes de cada projeto
     curriculo/               currículo em HTML, com impressão e download do PDF
     not-found.tsx            página 404

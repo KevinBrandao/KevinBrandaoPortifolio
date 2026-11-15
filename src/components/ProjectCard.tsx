@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, BrainCircuit } from "lucide-react";
+import { ArrowRight, BrainCircuit, ExternalLink } from "lucide-react";
 import type { Project } from "@/data/projects";
+import { GithubIcon } from "./icons";
 
 /** Capa do projeto: screenshot real quando existe; caso contrário, uma capa tipográfica. */
 export function ProjectCover({ project, priority = false }: { project: Project; priority?: boolean }) {
@@ -58,15 +59,15 @@ export function ProjectCover({ project, priority = false }: { project: Project; 
   );
 }
 
-export function ProjectCard({ project, large = false }: { project: Project; large?: boolean }) {
+const actionClass =
+  "relative z-10 grid size-10 place-items-center rounded-lg border border-line text-muted transition-colors hover:border-accent hover:text-fg";
+
+/** Card padrão de projeto: mesma estrutura e mesmo tamanho em todo o site. */
+export function ProjectCard({ project }: { project: Project }) {
   return (
-    <Link
-      href={`/projetos/${project.slug}`}
-      className="card group flex h-full flex-col overflow-hidden focus-visible:outline-offset-4"
-      aria-label={`${project.name}: ${project.tagline}. Ver detalhes`}
-    >
+    <article className="card card-link group flex h-full flex-col overflow-hidden">
       <ProjectCover project={project} />
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
+      <div className="flex flex-1 flex-col p-5">
         <div className="flex items-center justify-between gap-3 font-mono text-[0.7rem] text-muted">
           <span className="inline-flex items-center gap-1.5">
             {project.ai && <BrainCircuit className="size-3.5 text-accent-2" aria-hidden="true" />}
@@ -74,22 +75,53 @@ export function ProjectCard({ project, large = false }: { project: Project; larg
           </span>
           <span>{project.year}</span>
         </div>
-        <h3 className={`mt-3 font-medium tracking-tight ${large ? "text-2xl" : "text-xl"}`}>
-          {project.name}
-          <ArrowUpRight
-            className="ml-1.5 inline size-4 text-muted transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
-            aria-hidden="true"
-          />
+
+        <h3 className="mt-3 text-xl font-medium tracking-tight">
+          <Link href={`/projetos/${project.slug}`} className="after:absolute after:inset-0 after:content-['']">
+            {project.name}
+          </Link>
         </h3>
-        <p className="mt-2 text-sm leading-relaxed text-muted">{large ? project.summary : project.tagline}</p>
-        <ul className="mt-auto flex flex-wrap gap-1.5 pt-5">
-          {project.stack.slice(0, large ? 6 : 4).map((t) => (
+        <p className="mt-2 text-sm leading-relaxed text-muted">{project.tagline}</p>
+
+        <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Tecnologias">
+          {project.stack.slice(0, 4).map((t) => (
             <li key={t} className="chip">
               {t}
             </li>
           ))}
         </ul>
+
+        <div className="mt-auto flex items-center justify-between gap-3 pt-5">
+          <span className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors group-hover:text-accent" aria-hidden="true">
+            Ver detalhes
+            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </span>
+          <div className="flex items-center gap-2">
+            <a
+              href={project.links.repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Repositório de ${project.name} no GitHub`}
+              title="Repositório no GitHub"
+              className={actionClass}
+            >
+              <GithubIcon className="size-4" />
+            </a>
+            {project.links.demo && (
+              <a
+                href={project.links.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${project.links.demoLabel ?? "Ver demonstração"} de ${project.name}`}
+                title={project.links.demoLabel ?? "Ver demonstração"}
+                className={actionClass}
+              >
+                <ExternalLink className="size-4" aria-hidden="true" />
+              </a>
+            )}
+          </div>
+        </div>
       </div>
-    </Link>
+    </article>
   );
 }

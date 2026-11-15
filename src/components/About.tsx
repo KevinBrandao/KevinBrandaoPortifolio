@@ -11,6 +11,7 @@ export function About() {
       id="sobre"
       index="01"
       label="sobre"
+      pageTitle
       title={
         <>
           Da bancada de manutenção à <Serif>qualidade de software.</Serif>

@@ -37,7 +37,7 @@ export default async function ProjectPage({ params }: Params) {
 
   return (
     <article className="mx-auto w-full max-w-5xl px-5 pb-20 pt-28 sm:px-8 sm:pt-36">
-      <Link href="/#projetos" className="inline-flex items-center gap-2 py-2 text-sm text-muted hover:text-fg">
+      <Link href="/projetos" className="inline-flex items-center gap-2 py-2 text-sm text-muted hover:text-fg">
         <ArrowLeft className="size-4" aria-hidden="true" /> Todos os projetos
       </Link>
 

@@ -150,7 +150,8 @@ body {
     .card:hover::after {
       opacity: 1;
     }
-    a.card:hover {
+    a.card:hover,
+    .card-link:hover {
       border-color: color-mix(in srgb, var(--accent) 55%, transparent);
       transform: translateY(-3px);
       box-shadow:

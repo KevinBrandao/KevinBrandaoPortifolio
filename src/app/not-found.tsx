@@ -25,7 +25,7 @@ export default function NotFound() {
           <Link href="/" className="btn btn-primary">
             Voltar ao início
           </Link>
-          <Link href="/#projetos" className="btn btn-ghost">
+          <Link href="/projetos" className="btn btn-ghost">
             Ver projetos
           </Link>
         </div>

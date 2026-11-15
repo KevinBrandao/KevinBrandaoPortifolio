@@ -44,7 +44,7 @@ export function Hero() {
           <p className="mt-6 max-w-xl leading-relaxed text-muted sm:text-lg">{profile.intro}</p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Link href="/#projetos" className="btn btn-primary">
+            <Link href="/projetos" className="btn btn-primary">
               Ver projetos <ArrowDown className="size-4" aria-hidden="true" />
             </Link>
             <a href={profile.resumePdf} download className="btn btn-ghost">

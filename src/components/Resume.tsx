@@ -17,7 +17,7 @@ export function Resume() {
   return (
     <Section
       id="curriculo"
-      index="06"
+      index="05"
       label="currículo"
       title={
         <>
